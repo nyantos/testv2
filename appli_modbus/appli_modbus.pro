@@ -11,10 +11,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    m320t.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    m320t.h \
     mainwindow.h
 
 FORMS += \

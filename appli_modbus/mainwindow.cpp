@@ -1,12 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "m320t.h"
 #include <QStandardItemModel>
-#include <QStatusBar>
-#include <QUrl>
 #include <QObject>
-#include <QAction>
 #include <QModbusTcpClient>
-
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -14,48 +11,61 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    modbusDevice = new QModbusTcpClient(this);
-    if (ui->portEdit->text().isEmpty())
-       ui->portEdit->setText(QLatin1Literal("192.168.1.110:502"));
-
+    m320t = new QModbusTcpClient;
 
 }
 
 MainWindow::~MainWindow()
 {
-    if (modbusDevice)
-        modbusDevice->disconnectDevice();
-    delete modbusDevice;
+
 
     delete ui;
+    delete m320t;
 }
-void MainWindow::initActions()
+void MainWindow::connectM320T(QString ipAdr, unsigned short port)
 {
+    m320t->setConnectionParameter(QModbusDevice::NetworkAddressParameter, ipAdr);
+    m320t->setConnectionParameter(QModbusDevice::NetworkPortParameter, port);
+    m320t->connectDevice();
+
+
+}
+
+void MainWindow::writeAllOutputON()
+{
+    QModbusDataUnit allOut(QModbusDataUnit::Coils, 0, 8);
+    for (int i = 0; i <8; i++) {
+        allOut.setValue(i , 1 );
+    }
+    m320t->sendWriteRequest(allOut, 1);
+
+}
+
+
+void MainWindow::writeAllOutputOFF()
+{
+    QModbusDataUnit allOut(QModbusDataUnit::Coils, 0 , 8);
+    for (int i = 0; i <8; i++) {
+        allOut.setValue(i , 0 );
+    }
+    m320t->sendWriteRequest(allOut, 1);
 
 }
 
 void MainWindow::on_connectButton_clicked()
 {
-    if (!modbusDevice)
-        return;
 
-    statusBar()->clearMessage();
-    if (modbusDevice->state() != QModbusDevice::ConnectedState) {
-    const QUrl url = QUrl::fromUserInput(ui->portEdit->text());
-    modbusDevice->setConnectionParameter(QModbusDevice::NetworkPortParameter, url.port());
-    modbusDevice->setConnectionParameter(QModbusDevice::NetworkAddressParameter, url.host());
-
-    if (!modbusDevice->connectDevice()) {
-        statusBar()->showMessage(tr("Connect failed: ") + modbusDevice->errorString(), 5000);
-    }
-    else {
-        ui->actionConnect->setEnabled(false);
-        ui->actionDisconnect->setEnabled(true);
-        }
+connectM320T("192.168.1.110", 502);
 }
-    else {
-            modbusDevice->disconnectDevice();
-            ui->actionConnect->setEnabled(true);
-            ui->actionDisconnect->setEnabled(false);
-        }
+
+
+void MainWindow::on_AllOn_clicked()
+{
+      writeAllOutputON();
+}
+
+
+void MainWindow::on_AllOff_clicked()
+{
+       writeAllOutputOFF();
 }

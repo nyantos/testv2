@@ -1,10 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "m320t.h"
 #include <QMainWindow>
 #include <QObject>
 #include <QModbusClient>
 #include <QModbusDataUnit>
+
 
 
 QT_BEGIN_NAMESPACE
@@ -13,12 +14,14 @@ QT_BEGIN_NAMESPACE
 
 namespace Ui { class MainWindow; }
 
-class QModbusClient;
-class QModbusReply;
+class m320t;
 
 
 
 QT_END_NAMESPACE
+
+
+
 
 class MainWindow : public QMainWindow
 {
@@ -28,21 +31,25 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private:
-    void initActions();
-    QModbusDataUnit readRequest() const;
-    QModbusDataUnit writeRequest() const;
 
 
 private slots:
     void on_connectButton_clicked();
 
 
+    void on_AllOn_clicked();
+
+
+    void on_AllOff_clicked();
+
 private:
     Ui::MainWindow *ui;
-    QModbusReply *lastRequest;
-    QModbusClient *modbusDevice;
-    //SettingsDialog *m_settingsDialog;
-    //WriteRegisterModel *writeModel;
+    QModbusTcpClient *m320t;
+    void connectM320T(QString ipadr, unsigned short port);
+    void writeAllOutputON();
+    void writeAllOutputOFF();
+
+
+
 };
 #endif // MAINWINDOW_H
