@@ -19,10 +19,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+void refresh();
+
 private slots:
     void on_pushButton_2_clicked();
+    void refreshBdd(void);
 
-    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

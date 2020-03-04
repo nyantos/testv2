@@ -303,7 +303,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
          </rect>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>enregistrer</string>
         </property>
        </widget>
       </widget>
@@ -319,19 +319,6 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
           <width>691</width>
           <height>341</height>
          </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton">
-        <property name="geometry">
-         <rect>
-          <x>290</x>
-          <y>360</y>
-          <width>131</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>PushButton</string>
         </property>
        </widget>
       </widget>

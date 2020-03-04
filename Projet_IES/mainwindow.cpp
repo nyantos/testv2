@@ -7,15 +7,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    connect(this, SIGNAL(refresh()),this, SLOT(refreshBdd()));
+
     bdd = QSqlDatabase::addDatabase("QSQLITE");
-
-
-
     bdd.setDatabaseName("C:/Users/dylan/Documents/Lycée/bts 2nd année/qt/repo/Projet_IES/bdd.db");
     bdd.open();
+
     this->model = new QSqlQueryModel();
     model->setQuery("SELECT * FROM renseignement");
     ui->tableView->setModel(model);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -52,10 +54,12 @@ void MainWindow::on_pushButton_2_clicked()
 
     qDebug() << "envoi OK";
 
-
+    emit refresh();
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::refreshBdd()
 {
 
+    qDebug() << "test SLOT";
 }
+
