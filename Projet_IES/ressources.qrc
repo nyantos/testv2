@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>4f1565b18497a42d317cdf2531b7ef05-b85d4af4609c983c227a4b4368d908c893ef4da7/qtabwidget.css</file>
+    </qresource>
+</RCC>

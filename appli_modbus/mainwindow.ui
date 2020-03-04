@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>All On</string>
     </property>
    </widget>
    <widget class="QPushButton" name="AllOff">
@@ -50,7 +50,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>All Off</string>
     </property>
    </widget>
   </widget>
