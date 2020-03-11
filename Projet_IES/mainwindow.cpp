@@ -40,16 +40,19 @@ void MainWindow::on_pushButton_2_clicked()
 
      qDebug() << "tout va bien";
 
+ //    query.prepare("INSERT INTO renseignement (Nom, Prenom) values ('azerty', 'qwerty')");
+ //   query.exec();
+
        query.prepare("INSERT INTO renseignement (Nom, Prenom,Licence,Tag_RFID,Image_tir,Date)"
-                      " VALUES (:nom, :prenom,:licence,:rfid,:image,:date)");
+                      " VALUES (?,?,?,?,?,?)");
      qDebug() << "ça va bien";
 
-    query.bindValue(":nom",nom);
-    query.bindValue(":prenom",prenom);
-    query.bindValue(":date",date);
-    query.bindValue(":licence",licence);
-    query.bindValue(":rfid",RFID);
-    query.bindValue(":image",imageTir);
+    query.addBindValue(nom);
+    query.addBindValue(prenom);
+    query.addBindValue(licence);
+    query.addBindValue(RFID);
+    query.addBindValue(imageTir);
+    query.addBindValue(date);
     query.exec();
 
     qDebug() << "envoi OK";
@@ -59,6 +62,8 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::refreshBdd()
 {
+    model->setQuery("SELECT * FROM renseignement");
+    ui->tableView->setModel(model);
 
     qDebug() << "test SLOT";
 }
